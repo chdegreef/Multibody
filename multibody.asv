@@ -26,7 +26,7 @@ Data.NBody = length(Data.Body)+1;
 % 4: lowerArm->knuckle, R1
 % 5: knuckle->axle, R1
 % 6: axle->wheel, R2
-Data.q = [0.7 -0.2 -0.3 0 -0.1 0.15];
+Data.q = [0.7 -0.2 -0.3 0 0 0];
 Data.qd = zeros(1,Data.NBody);
 Data.qdd = zeros(1,Data.NBody);
 Data.phi = [0 1 1 1 1 0;
@@ -76,8 +76,6 @@ for i=2:Data.NBody
         if(Data.phi(Data.axis(Data.joints(joint,i)),Data.joints(joint,i)) == 1)
             R_ih_loc = rot(Data.axis(Data.joints(joint,i)),Data.q(Data.joints(joint,i)));
             R_ih = R_ih_loc*R_ih;
-        else
-            R_ih_loc = eye(3);
         end
         
         if (joint == 1)
@@ -102,7 +100,7 @@ for i=2:Data.NBody
         Data.OM(:,i,k) = R_ih*Data.OM(:,h,k);% + (k==i)*Data.phi(:,i);
         Data.AM(:,i,k) = R_ih*(Data.AM(:,h,k) + tilde(Data.OM(:,h,k))*(Data.z(:,h) + Data.dij(:,h,i)));% + (k==i)*Data.psi(:,i);
         joint = 1;
-        while(Data.joints(joint,i) ~= 0)
+        while(Data.joints(joint,joint) ~= 0)
             Data.OM(:,i,k) = Data.OM(:,i,k) + (k==Data.joints(joint,i))*Data.phi(:,Data.joints(joint,i));
             Data.AM(:,i,k) = Data.AM(:,i,k) + (k==Data.joints(joint,i))*Data.psi(:,Data.joints(joint,i));
             joint = joint + 1;
