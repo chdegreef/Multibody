@@ -26,7 +26,7 @@ Data.NBody = length(Data.Body)+1;
 % 4: lowerArm->knuckle, R1
 % 5: knuckle->axle, R1
 % 6: axle->wheel, R2
-Data.q = [0.7 -0.2 -0.3 0 -0.1 0.15];
+Data.q = [0.7 -0.2 -0.2 0 0 0.1];
 Data.qd = zeros(1,Data.NBody);
 Data.qdd = zeros(1,Data.NBody);
 Data.phi = [0 1 1 1 1 0;
@@ -40,13 +40,13 @@ Data.axis = [3 1 1 1 1 2];
 Data.z = zeros(3,Data.NBody);
 Data.z(:,1) = [0; 0; Data.q(1)];
 Data.dij = zeros(3,Data.NBody,Data.NBody);  % Definition of the vectors between anchor points and centers of mass
-Data.dij(:,1,2) = [0; 0.25; 0];
-Data.dij(:,1,3) = [0; 0.25; -0.25];
-Data.dij(:,2,2) = [0; 0.25; 0];
+Data.dij(:,2,3) = [0; 0.25; 0];
+Data.dij(:,2,4) = [0; 0.25; -0.25];
 Data.dij(:,3,3) = [0; 0.25; 0];
-Data.dij(:,3,4) = [0; 0.5; 0];
-Data.dij(:,4,4) = [0; 0; 0.125];
-Data.dij(:,4,5) = [0; 0.1; 0.125];
+Data.dij(:,4,4) = [0; 0.25; 0];
+Data.dij(:,4,5) = [0; 0.5; 0];
+Data.dij(:,5,5) = [0; 0; 0.125];
+Data.dij(:,5,6) = [0; 0.1; 0.125];
 
 Data.joints = zeros(6,Data.NBody);  % For each body, contains all the joints that connect them to their parent, until a maximum of 6
 Data.joints(1,2) = 1;
@@ -63,6 +63,16 @@ Data.omega = zeros(3,Data.NBody);
 Data.omegacd = zeros(3,Data.NBody);
 Data.OM = zeros(3, Data.NBody, Data.NBody);
 Data.AM = zeros(3, Data.NBody, Data.NBody);
+Data.Rij = zeros(3,3,Data.NBody);
+
+Data.F = zeros(3, Data.NBody);
+Data.L = zeros(3, Data.NBody);
+Data.Wc = zeros(3, Data.NBody);
+Data.Fc = zeros(3, Data.NBody);
+Data.Lc = zeros(3, Data.NBody);
+Data.WM = zeros(3, Data.NBody, Data.NBody);
+Data.FM = zeros(3, Data.NBody, Data.NBody);
+Data.LM = zeros(3, Data.NBody, Data.NBody);
 
 %% Forward Kinematics
 
@@ -90,6 +100,7 @@ for i=2:Data.NBody
         Data.alphac(:,i) = Data.alphac(:,i) + 2*tilde(Data.omega(:,i))*Data.psi(:,Data.joints(joint,i))*Data.qd(Data.joints(joint,i));
         joint = joint + 1;
     end
+    Data.Rij(:,:,i) = R_ih;
     
     % Definition of the rotation matrix between frame h and i
     %Data.omega(:,i) = R_ih*Data.omega(:,h) + Data.phi(:,i)*Data.qd(i);
@@ -109,4 +120,43 @@ for i=2:Data.NBody
         end
     end
     
+end
+
+%% External forces
+Data.Fext = extForces(Data);%zeros(3, Data.NBody);
+Data.Lext = zeros(3, Data.NBody);
+
+%% Inverse Dynamics
+i = Data.NBody;
+while(i > 1)
+    Data.Wc(:,i) = Data.Body(i-1).m*(Data.alphac(:,i) + Data.betac(:,:,i)*(Data.z(:,i) + Data.dij(:,i,i))) - Data.Fext(:,i);
+    Data.Fc(:,i) = Data.Wc(:,i);
+    Data.Lc(:,i) = tilde(Data.z(:,i) + Data.dij(:,i,i))*Data.Wc(:,i) - Data.Lext(:,i) + Data.Body(i-1).I*Data.omegacd(:,i) + tilde(Data.omega(:,i))*Data.Body(i-1).I*Data.omega(:,i);
+    for j=2:Data.NBody
+        if(Data.inBody(j) == i)     % The parent body is the current body <==> The jth body is the children of the ith body
+            Data.Fc(:,i) = Data.Fc(:,i) + Data.Rij(:,:,j).' * Data.Fc(:,j);
+            Data.Lc(:,i) = Data.Lc(:,i) + Data.Rij(:,:,j).' * Data.Lc(:,j) + tilde(Data.z(:,i) + Data.dij(:,i,j))*Data.Rij(:,:,j).' * Data.Fc(:,j);
+        end
+    end
+    
+    for k=2:i
+        Data.WM(:,i,k) = Data.Body(i-1).m*(Data.AM(:,i,k) + tilde(Data.OM(:,i,k))*(Data.z(:,i) + Data.dij(:,i,i)));
+        Data.FM(:,i,k) = Data.WM(:,i,k);
+        Data.LM(:,i,k) = tilde(Data.z(:,i) + Data.dij(:,i,i))*Data.WM(:,i,k) + Data.Body(i-1).I*Data.OM(:,i,k);
+        for j=2:Data.NBody
+            if(Data.inBody(j) == i)     % The parent body is the current body <==> The jth body is the children of the ith body
+                Data.FM(:,i,k) = Data.FM(:,i,k) + Data.Rij(:,:,j).' * Data.FM(:,j,k);
+                Data.LM(:,i,k) = Data.LM(:,i,k) + Data.Rij(:,:,j).' * Data.LM(:,j,k) + tilde(Data.z(:,i) + Data.dij(:,i,j))*Data.Rij(:,:,j).' * Data.FM(:,j,k);
+            end
+        end
+    end
+    i = i-1;
+end
+
+%% Mass matrix M, non-linear term C, independent term Q
+for i=1:Data.NBody
+Data.C(i) = Data.psi(:,i)'*Data.Fc(:,i) + Data.phi(:,i)'*Data.Lc(:,i);
+    for j=1:i
+        Data.M(i,j) = Data.psi(:,i)'*Data.FM(:,i,j) + Data.phi(:,i)'*Data.LM(:,i,j);
+    end
 end
