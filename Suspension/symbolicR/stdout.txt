@@ -1,0 +1,290 @@
+
+##############################################################
+#	file3.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file3.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 8 : Constraints Vector (h) and Jacobian Matrix (Jac) 
+nombre de contraintes �lmimin�es : 1
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+21 useless equations removed 
+21 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+26 Equations removed from memory 
+Removing 347 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file7.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file7.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 2 : Inverse Dynamics : RNEA
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+33 useless equations removed 
+33 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+41 Equations removed from memory 
+Removing 947 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file4.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file4.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F18 : Constraints Quadratic Velocity Terms (Jdqd)
+nombre de contraintes �lmimin�es : 1
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+15 useless equations removed 
+15 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+13 Equations removed from memory 
+Removing 441 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file1b.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file1b.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 6 : Sensors Kinematical Informations (sens) 
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+42 useless equations removed 
+42 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+116 Equations removed from memory 
+Removing 790 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file0.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file0.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 1 : Direct Dynamics (Semi-Explicit formulation) : RNEA
+Generating the forward kinematics equations 
+Generating the backward dynamics equations 
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+81 useless equations removed 
+81 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+69 Equations removed from memory 
+Removing 1553 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file6.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file6.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F27 : Point to point Link3D Forces (frc,trq,Flink3D) 
+Symbolic Equations Generation Aborted !!
+Deallocating Memory...  
+10 Equations removed from memory 
+Removing 141 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file5.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file5.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F19 : External Forces
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+23 useless equations removed 
+23 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+88 Equations removed from memory 
+Removing 918 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file2.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file2.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 7 : Point to point Link Forces (frc,trq,Flnk) 
+Generation of the inter body forces equations 
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+14 useless equations removed 
+14 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+48 Equations removed from memory 
+Removing 465 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
+
+##############################################################
+#	file1.gen 28/04/2016 22:41:19    messages
+##############################################################
+ ------------------------------- 
+  ROBOTRAN - Symbolic Generator 
+  Version 6.6 (build : february 22, 2008) 
+  Pr. Paul FISETTE - 1990..1994 
+  Dr. Tony POSTIAU - 2000..2004 
+ ------------------------------- 
+Symbolic generation file : /usr/local/robotran/users/MECA2802/upload/file1.gen
+Project : /usr/local/robotran/users/MECA2802/upload/Suspension.mbs
+F 6 : Sensors Kinematical Informations (sens) 
+Symbolic Equations Generation...Done
+Equations list processing... 
+Selecting usefull equations 
+Building result equations list... 
+Removing useless equations... 
+51 useless equations removed 
+51 Equations removed from memory 
+Substitution of variables with a single occurence 
+Counting operations ... 
+Building hierarchical structure... 
+Equations list processing...Done 
+Printing Equations... 
+Printing Equations...Done 
+Deallocating Memory...  
+144 Equations removed from memory 
+Removing 857 expressions... 
+0 expressions remaining in memory 
+
+--
+Done
