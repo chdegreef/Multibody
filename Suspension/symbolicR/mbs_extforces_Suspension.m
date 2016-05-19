@@ -11,7 +11,7 @@
 %	1348 Louvain-la-Neuve 
 %	http://www.robotran.be// 
 %
-%	==> Generation Date : Wed May 18 15:16:51 2016
+%	==> Generation Date : Thu May 19 17:32:49 2016
 %
 %	==> Project name : Suspension
 %	==> using XML input file 
@@ -19,7 +19,7 @@
 %	==> Number of joints : 6
 %
 %	==> Function : F19 : External Forces
-%	==> Flops complexity : 106
+%	==> Flops complexity : 120
 %
 %	==> Generation Time :  0.000 seconds
 %	==> Post-Processing :  0.000 seconds
@@ -82,14 +82,19 @@ trq = s.trq;
   ORcp1_24 = -qd(3)*RLcp1_34;
   ORcp1_34 = qd(3)*RLcp1_24;
   OPcp1_14 = qdd(3)+qdd(4);
-  RLcp1_25 = s.dpt(2,7)*C3p4-s.dpt(3,7)*S3p4;
-  RLcp1_35 = s.dpt(2,7)*S3p4+s.dpt(3,7)*C3p4;
+  RLcp1_25 = -s.dpt(3,7)*S3p4;
+  RLcp1_35 = s.dpt(3,7)*C3p4;
   OMcp1_15 = qd(5)+OMcp1_14;
   ORcp1_25 = -OMcp1_14*RLcp1_35;
   ORcp1_35 = OMcp1_14*RLcp1_25;
+  OPcp1_15 = qdd(5)+OPcp1_14;
+  RLcp1_26 = s.dpt(2,8)*C5p3p4;
+  RLcp1_36 = s.dpt(2,8)*S5p3p4;
+  ORcp1_26 = -OMcp1_15*RLcp1_36;
+  ORcp1_36 = OMcp1_15*RLcp1_26;
   PxF1(1) = 0;
-  PxF1(2) = RLcp1_24+RLcp1_25+s.dpt(2,2);
-  PxF1(3) = q(1)+RLcp1_34+RLcp1_35+s.dpt(3,2);
+  PxF1(2) = RLcp1_24+RLcp1_25+RLcp1_26+s.dpt(2,2);
+  PxF1(3) = q(1)+RLcp1_34+RLcp1_35+RLcp1_36+s.dpt(3,2);
   RxF1(1,1) = C6;
   RxF1(1,2) = ROcp1_26;
   RxF1(1,3) = ROcp1_36;
@@ -100,15 +105,15 @@ trq = s.trq;
   RxF1(3,2) = ROcp1_86;
   RxF1(3,3) = ROcp1_96;
   VxF1(1) = 0;
-  VxF1(2) = ORcp1_24+ORcp1_25;
-  VxF1(3) = qd(1)+ORcp1_34+ORcp1_35;
+  VxF1(2) = ORcp1_24+ORcp1_25+ORcp1_26;
+  VxF1(3) = qd(1)+ORcp1_34+ORcp1_35+ORcp1_36;
   OMxF1(1) = OMcp1_15;
   OMxF1(2) = qd(6)*C5p3p4;
   OMxF1(3) = qd(6)*S5p3p4;
   AxF1(1) = 0;
-  AxF1(2) = -(qd(3)*ORcp1_34+qdd(3)*RLcp1_34+OMcp1_14*ORcp1_35+OPcp1_14*RLcp1_35);
-  AxF1(3) = qdd(1)+qd(3)*ORcp1_24+qdd(3)*RLcp1_24+OMcp1_14*ORcp1_25+OPcp1_14*RLcp1_25;
-  OMPxF1(1) = qdd(5)+OPcp1_14;
+  AxF1(2) = -(qd(3)*ORcp1_34+qdd(3)*RLcp1_34+OMcp1_14*ORcp1_35+OMcp1_15*ORcp1_36+OPcp1_14*RLcp1_35+OPcp1_15*RLcp1_36);
+  AxF1(3) = qdd(1)+qd(3)*ORcp1_24+qdd(3)*RLcp1_24+OMcp1_14*ORcp1_25+OMcp1_15*ORcp1_26+OPcp1_14*RLcp1_25+OPcp1_15*RLcp1_26;
+  OMPxF1(1) = OPcp1_15;
   OMPxF1(2) = -(qd(6)*OMcp1_15*S5p3p4-qdd(6)*C5p3p4);
   OMPxF1(3) = qd(6)*OMcp1_15*C5p3p4+qdd(6)*S5p3p4;
  
@@ -147,6 +152,9 @@ trq = s.trq;
   frc(1,4) = s.frc(1,4);
   frc(2,4) = s.frc(2,4);
   frc(3,4) = s.frc(3,4);
+  frc(1,5) = s.frc(1,5);
+  frc(2,5) = s.frc(2,5);
+  frc(3,5) = s.frc(3,5);
   trq(1,1) = s.trq(1,1);
   trq(2,1) = s.trq(2,1);
   trq(3,1) = s.trq(3,1);
@@ -159,6 +167,9 @@ trq = s.trq;
   trq(1,4) = s.trq(1,4);
   trq(2,4) = s.trq(2,4);
   trq(3,4) = s.trq(3,4);
+  trq(1,5) = s.trq(1,5);
+  trq(2,5) = s.trq(2,5);
+  trq(3,5) = s.trq(3,5);
 
 % ====== END Task 0 ====== 
 

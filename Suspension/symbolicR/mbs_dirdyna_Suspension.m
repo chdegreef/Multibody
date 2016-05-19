@@ -11,7 +11,7 @@
 %	1348 Louvain-la-Neuve 
 %	http://www.robotran.be// 
 %
-%	==> Generation Date : Wed May 18 15:16:51 2016
+%	==> Generation Date : Thu May 19 17:32:49 2016
 %
 %	==> Project name : Suspension
 %	==> using XML input file 
@@ -19,10 +19,10 @@
 %	==> Number of joints : 6
 %
 %	==> Function : F 1 : Direct Dynamics (Semi-Explicit formulation) : RNEA
-%	==> Flops complexity : 248
+%	==> Flops complexity : 157
 %
 %	==> Generation Time :  0.000 seconds
-%	==> Post-Processing :  0.010 seconds
+%	==> Post-Processing :  0.000 seconds
 %
 %-------------------------------------------------------------
 %
@@ -67,7 +67,6 @@ trq = s.trq;
  
 % Trigonometric Variables  
 
-  C3p4 = C3*C4-S3*S4;
   S3p4 = C3*S4+S3*C4;
  
 % Forward Kinematics 
@@ -76,14 +75,6 @@ trq = s.trq;
   AlF23 = -s.g(3)*S3;
   AlF33 = -s.g(3)*C3;
   OM14 = qd(3)+qd(4);
-  BS54 = -OM14*OM14;
-  BS94 = -OM14*OM14;
-  AlF24 = AlF33*S4+C4*(AlF23+BS53*s.dpt(2,4));
-  AlF34 = AlF33*C4-S4*(AlF23+BS53*s.dpt(2,4));
-  AlM24_3 = s.dpt(2,4)*S4;
-  AlM34_3 = s.dpt(2,4)*C4;
-  OM15 = qd(5)+OM14;
-  AlF35 = C5*(AlF34+BS94*s.dpt(3,7))-S5*(AlF24+BS54*s.dpt(2,7));
 
 % = = Block_0_2_0_1_0_2 = = 
  
@@ -98,26 +89,21 @@ trq = s.trq;
  
 % Backward Dynamics 
 
-  FA26 = -(s.frc(2,6)-s.m(6)*(C5*(AlF24+BS54*s.dpt(2,7))+S5*(AlF34+BS94*s.dpt(3,7))));
-  FB26_3 = s.m(6)*(C5*(AlM24_3-s.dpt(3,7))+S5*(AlM34_3+s.dpt(2,7)));
-  FB26_4 = s.m(6)*(s.dpt(2,7)*S5-s.dpt(3,7)*C5);
-  FF5_36 = -(C6*(s.frc(3,6)-s.m(6)*AlF35*C6)-S6*(s.frc(1,6)+s.m(6)*AlF35*S6));
-  CF5_16 = -(C6*(s.trq(1,6)+qd(6)*s.In(5,6)*OM15*S6)+S6*(s.trq(3,6)-qd(6)*s.In(5,6)*OM15*C6));
-  FM53_36 = s.m(6)*(C5*(AlM34_3+s.dpt(2,7))-S5*(AlM24_3-s.dpt(3,7)));
-  FM54_36 = s.m(6)*(s.dpt(2,7)*C5+s.dpt(3,7)*S5);
-  FA24 = -(s.frc(2,4)-s.m(4)*AlF24);
-  FF24 = FA24+FA26*C5-FF5_36*S5;
-  FF34 = -(s.frc(3,4)-s.m(4)*(AlF34+BS94*s.l(3,4))-FA26*S5-FF5_36*C5);
-  CF14 = -(s.trq(1,4)-CF5_16+FA24*s.l(3,4)-s.dpt(2,7)*(FA26*S5+FF5_36*C5)+s.dpt(3,7)*(FA26*C5-FF5_36*S5));
-  FB24_1 = s.m(4)*S3p4;
-  CM14_1 = s.m(6)*(s.dpt(2,7)*C3p4-s.dpt(3,7)*S3p4)-FB24_1*s.l(3,4);
-  FB24_3 = s.m(4)*(AlM24_3-s.l(3,4));
-  CM14_3 = s.dpt(2,7)*(FB26_3*S5+FM53_36*C5)-s.dpt(3,7)*(FB26_3*C5-FM53_36*S5)-FB24_3*s.l(3,4);
-  CM14_4 = s.m(4)*s.l(3,4)*s.l(3,4)+s.dpt(2,7)*(FB26_4*S5+FM54_36*C5)-s.dpt(3,7)*(FB26_4*C5-FM54_36*S5);
+  FF25 = -(s.frc(2,5)+s.frc(2,6));
+  FF35 = -(s.frc(3,5)-s.frc(1,6)*S6+s.frc(3,6)*C6);
+  CF15 = -(s.trq(1,5)+s.trq(1,6)*C6+s.trq(3,6)*S6-s.dpt(2,8)*(s.frc(1,6)*S6-s.frc(3,6)*C6));
+  FA24 = -(s.frc(2,4)-s.m(4)*(AlF33*S4+C4*(AlF23+BS53*s.dpt(2,4))));
+  FF24 = FA24+FF25*C5-FF35*S5;
+  FF34 = -(s.frc(3,4)-s.m(4)*(AlF33*C4-OM14*OM14*s.l(3,4)-S4*(AlF23+BS53*s.dpt(2,4)))-FF25*S5-FF35*C5);
+  CF14 = -(s.trq(1,4)-CF15+FA24*s.l(3,4)+s.dpt(3,7)*(FF25*C5-FF35*S5));
+  CM14_1 = -s.m(4)*s.l(3,4)*S3p4;
+  FB24_3 = s.m(4)*(s.dpt(2,4)*S4-s.l(3,4));
+  CM14_3 = -FB24_3*s.l(3,4);
+  CM14_4 = s.m(4)*s.l(3,4)*s.l(3,4);
   FA33 = -(s.frc(3,3)-s.m(3)*AlF33);
   CF13 = -(s.trq(1,3)-CF14-FA33*s.l(2,3)-s.dpt(2,4)*(FF24*S4+FF34*C4));
-  CM13_1 = CM14_1+s.m(3)*s.l(2,3)*C3+s.dpt(2,4)*(C4*C3p4*(s.m(4)+s.m(6))+S4*(FB24_1+s.m(6)*S3p4));
-  CM13_3 = s.In(1,3)+CM14_3+s.m(3)*s.l(2,3)*s.l(2,3)+s.dpt(2,4)*(C4*(s.m(4)*AlM34_3+FB26_3*S5+FM53_36*C5)+S4*(FB24_3+FB26_3*C5-FM53_36*S5));
+  CM13_1 = s.m(3)*s.l(2,3)*C3+s.m(4)*(s.dpt(2,4)*C3-s.l(3,4)*S3p4);
+  CM13_3 = s.In(1,3)+CM14_3+s.m(3)*s.l(2,3)*s.l(2,3)+s.dpt(2,4)*(s.m(4)*s.dpt(2,4)*C4*C4+FB24_3*S4);
 
 % = = Block_0_2_0_2_0_1 = = 
  
@@ -125,7 +111,7 @@ trq = s.trq;
 
   FF31 = -(s.frc(3,1)+s.m(1)*s.g(3)-FA32*C2+S2*(s.frc(2,2)+s.m(2)*(qd(2)*qd(2)*s.l(2,2)+s.g(3)*S2))-C3*(FA33+FF24*S4+FF34*C4)+S3*(s.frc(2,3)-...
  s.m(3)*(AlF23+BS53*s.l(2,3))-FF24*C4+FF34*S4));
-  FM31_1 = s.m(1)+s.m(2)+s.m(3)+s.m(4)+s.m(6);
+  FM31_1 = s.m(1)+s.m(2)+s.m(3)+s.m(4);
 
 % = = Block_0_3_0_0_0_0 = = 
  
@@ -143,12 +129,11 @@ trq = s.trq;
   M(4,1) = CM14_1;
   M(4,3) = CM14_3;
   M(4,4) = CM14_4;
-  M(6,6) = s.In(5,6);
   c(1) = FF31;
   c(2) = CF12;
   c(3) = CF13;
   c(4) = CF14;
-  c(5) = CF5_16;
+  c(5) = CF15;
   c(6) = -s.trq(2,6);
 
 % ====== END Task 0 ====== 

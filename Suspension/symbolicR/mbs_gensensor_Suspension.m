@@ -11,7 +11,7 @@
 %	1348 Louvain-la-Neuve 
 %	http://www.robotran.be// 
 %
-%	==> Generation Date : Wed May 18 15:16:51 2016
+%	==> Generation Date : Thu May 19 17:32:49 2016
 %
 %	==> Project name : Suspension
 %	==> using XML input file 
@@ -19,10 +19,10 @@
 %	==> Number of joints : 6
 %
 %	==> Function : F 6 : Sensors Kinematical Informations (sens) 
-%	==> Flops complexity : 143
+%	==> Flops complexity : 154
 %
 %	==> Generation Time :  0.000 seconds
-%	==> Post-Processing :  0.000 seconds
+%	==> Post-Processing :  0.010 seconds
 %
 %-------------------------------------------------------------
 %
@@ -209,8 +209,8 @@ case 5,
     ORcp4_24 = -RLcp4_34*qd(3);
     ORcp4_34 = RLcp4_24*qd(3);
     OPcp4_14 = qdd(3)+qdd(4);
-    RLcp4_25 = s.dpt(2,7)*C3p4-s.dpt(3,7)*S3p4;
-    RLcp4_35 = s.dpt(2,7)*S3p4+s.dpt(3,7)*C3p4;
+    RLcp4_25 = -s.dpt(3,7)*S3p4;
+    RLcp4_35 = s.dpt(3,7)*C3p4;
     POcp4_25 = RLcp4_24+RLcp4_25+s.dpt(2,2);
     POcp4_35 = RLcp4_34+RLcp4_35+q(1)+s.dpt(3,2);
     OMcp4_15 = OMcp4_14+qd(5);
@@ -259,29 +259,33 @@ case 6,
     ORcp5_24 = -RLcp5_34*qd(3);
     ORcp5_34 = RLcp5_24*qd(3);
     OPcp5_14 = qdd(3)+qdd(4);
-    RLcp5_25 = s.dpt(2,7)*C3p4-s.dpt(3,7)*S3p4;
-    RLcp5_35 = s.dpt(2,7)*S3p4+s.dpt(3,7)*C3p4;
-    POcp5_25 = RLcp5_24+RLcp5_25+s.dpt(2,2);
-    POcp5_35 = RLcp5_34+RLcp5_35+q(1)+s.dpt(3,2);
+    RLcp5_25 = -s.dpt(3,7)*S3p4;
+    RLcp5_35 = s.dpt(3,7)*C3p4;
     OMcp5_15 = OMcp5_14+qd(5);
     ORcp5_25 = -OMcp5_14*RLcp5_35;
     ORcp5_35 = OMcp5_14*RLcp5_25;
-    VIcp5_25 = ORcp5_24+ORcp5_25;
-    VIcp5_35 = ORcp5_34+ORcp5_35+qd(1);
     OPcp5_15 = OPcp5_14+qdd(5);
-    ACcp5_25 = -(OMcp5_14*ORcp5_35+OPcp5_14*RLcp5_35+ORcp5_34*qd(3)+RLcp5_34*qdd(3));
-    ACcp5_35 = qdd(1)+OMcp5_14*ORcp5_25+OPcp5_14*RLcp5_25+ORcp5_24*qd(3)+RLcp5_24*qdd(3);
+    RLcp5_26 = s.dpt(2,8)*C5p3p4;
+    RLcp5_36 = s.dpt(2,8)*S5p3p4;
+    POcp5_26 = RLcp5_24+RLcp5_25+RLcp5_26+s.dpt(2,2);
+    POcp5_36 = RLcp5_34+RLcp5_35+RLcp5_36+q(1)+s.dpt(3,2);
     OMcp5_26 = qd(6)*C5p3p4;
     OMcp5_36 = qd(6)*S5p3p4;
+    ORcp5_26 = -OMcp5_15*RLcp5_36;
+    ORcp5_36 = OMcp5_15*RLcp5_26;
+    VIcp5_26 = ORcp5_24+ORcp5_25+ORcp5_26;
+    VIcp5_36 = ORcp5_34+ORcp5_35+ORcp5_36+qd(1);
     OPcp5_26 = -(OMcp5_15*qd(6)*S5p3p4-qdd(6)*C5p3p4);
     OPcp5_36 = OMcp5_15*qd(6)*C5p3p4+qdd(6)*S5p3p4;
+    ACcp5_26 = -(OMcp5_14*ORcp5_35+OMcp5_15*ORcp5_36+OPcp5_14*RLcp5_35+OPcp5_15*RLcp5_36+ORcp5_34*qd(3)+RLcp5_34*qdd(3));
+    ACcp5_36 = qdd(1)+OMcp5_14*ORcp5_25+OMcp5_15*ORcp5_26+OPcp5_14*RLcp5_25+OPcp5_15*RLcp5_26+ORcp5_24*qd(3)+RLcp5_24*qdd(3);
 
 % = = Block_1_0_0_6_1_0 = = 
  
 % Symbolic Outputs  
 
-    sens.P(2) = POcp5_25;
-    sens.P(3) = POcp5_35;
+    sens.P(2) = POcp5_26;
+    sens.P(3) = POcp5_36;
     sens.R(1,1) = C6;
     sens.R(1,2) = ROcp5_26;
     sens.R(1,3) = ROcp5_36;
@@ -290,13 +294,13 @@ case 6,
     sens.R(3,1) = S6;
     sens.R(3,2) = ROcp5_86;
     sens.R(3,3) = ROcp5_96;
-    sens.V(2) = VIcp5_25;
-    sens.V(3) = VIcp5_35;
+    sens.V(2) = VIcp5_26;
+    sens.V(3) = VIcp5_36;
     sens.OM(1) = OMcp5_15;
     sens.OM(2) = OMcp5_26;
     sens.OM(3) = OMcp5_36;
-    sens.A(2) = ACcp5_25;
-    sens.A(3) = ACcp5_35;
+    sens.A(2) = ACcp5_26;
+    sens.A(3) = ACcp5_36;
     sens.OMP(1) = OPcp5_15;
     sens.OMP(2) = OPcp5_26;
     sens.OMP(3) = OPcp5_36;
