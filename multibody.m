@@ -15,10 +15,9 @@ UpperArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 LowerArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 Knuckle = struct('m',5,'I',zeros(3,3));
 Wheel = struct('m',5,'I',[0 0 0; 0 0.4 0; 0 0 0]);
-Axle = struct('m',0,'I',zeros(3,3));
-Data.Body = [Chassis UpperArm LowerArm Knuckle Wheel Axle];
-
-Data.inBody = [-42 1 2 2 4 5 6];
+Axle = struct('m', 0,'I',zeros(3,3));
+Data.Body = [Chassis UpperArm LowerArm Knuckle Axle Wheel];
+Data.inBody = [0 1 2 2 4 5 6];
 Data.NBody = length(Data.Body)+1;       % The +1 comes from the addition of the base
 
 
@@ -55,6 +54,7 @@ Data.dij(:,4,4) = [0; 0.25; 0];
 Data.dij(:,4,5) = [0; 0.5; 0];
 Data.dij(:,5,5) = [0; 0; 0.125];
 Data.dij(:,5,6) = [0; 0.1; 0.125];
+Data.dij(:,5,7) = [0; 0; 0];
 
 %% Initialization
 Data.alphac = zeros(3,Data.NBody);

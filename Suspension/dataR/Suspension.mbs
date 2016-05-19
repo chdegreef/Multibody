@@ -372,7 +372,7 @@
       </graphics>
     </body>
     <body>
-      <bodyname>Axle</bodyname>
+      <bodyname>Knuckle</bodyname>
       <parent>
         <bodyname>LowerArm</bodyname>
         <pointname>Point_0</pointname>
@@ -423,7 +423,7 @@
         <pointname>Point_1</pointname>
         <coordinates>
           <x>0.0</x>
-          <y>0.1</y>
+          <y>0.0</y>
           <z>0.125</z>
         </coordinates>
         <graphics>
@@ -479,9 +479,9 @@
       </graphics>
     </body>
     <body>
-      <bodyname>Wheel</bodyname>
+      <bodyname>axle</bodyname>
       <parent>
-        <bodyname>Axle</bodyname>
+        <bodyname>Knuckle</bodyname>
         <pointname>Point_1</pointname>
       </parent>
       <joint>
@@ -491,8 +491,8 @@
         <graphics>
           <x2D>
             <position>
-              <x>513.0</x>
-              <y>279.0</y>
+              <x>515.0</x>
+              <y>319.0</y>
             </position>
           </x2D>
           <x3D>
@@ -501,19 +501,79 @@
           </x3D>
         </graphics>
       </joint>
-      <joint>
-        <jointname>R2_Wheel</jointname>
-        <type>R2</type>
-        <nature>driven</nature>
-        <symbols>
-          <q />
-          <qd />
-          <qdd />
-        </symbols>
+      <point>
+        <pointname>Point_0</pointname>
+        <coordinates>
+          <x>0.0</x>
+          <y>0.1</y>
+          <z>0.0</z>
+        </coordinates>
         <graphics>
           <x2D>
             <position>
-              <x>540.0</x>
+              <x>575.0</x>
+              <y>320.0</y>
+            </position>
+          </x2D>
+          <x3D />
+        </graphics>
+      </point>
+      <graphics>
+        <x2D>
+          <position>
+            <x>-17.0</x>
+            <y>-26.0</y>
+          </position>
+          <name_pos>
+            <x>0.0</x>
+            <y>0.0</y>
+          </name_pos>
+          <shape>rectangle</shape>
+          <size>
+            <x>100.0</x>
+            <y>48.0</y>
+          </size>
+          <control_points>
+            <control_point>
+              <x>83.0</x>
+              <y>-26.0</y>
+            </control_point>
+            <control_point>
+              <x>83.0</x>
+              <y>22.0</y>
+            </control_point>
+            <control_point>
+              <x>-17.0</x>
+              <y>22.0</y>
+            </control_point>
+            <control_point>
+              <x>-17.0</x>
+              <y>-26.0</y>
+            </control_point>
+          </control_points>
+          <angle>0.0</angle>
+        </x2D>
+        <x3D>
+          <x3D_com />
+          <x3D_points />
+          <x3D_lines />
+        </x3D>
+      </graphics>
+    </body>
+    <body>
+      <bodyname>Wheel</bodyname>
+      <parent>
+        <bodyname>axle</bodyname>
+        <pointname>Point_0</pointname>
+      </parent>
+      <joint>
+        <jointname>Joint_0</jointname>
+        <type>R2</type>
+        <nature>independent</nature>
+        <graphics>
+          <x2D>
+            <position>
+              <x>644.0</x>
               <y>235.0</y>
             </position>
           </x2D>
@@ -523,10 +583,6 @@
           </x3D>
         </graphics>
       </joint>
-      <mass>5.0</mass>
-      <inertia>
-        <Iyy>0.4</Iyy>
-      </inertia>
       <point>
         <pointname>origin</pointname>
         <coordinates>
@@ -540,8 +596,8 @@
       <graphics>
         <x2D>
           <position>
-            <x>5.0</x>
-            <y>-20.0</y>
+            <x>1.0</x>
+            <y>-24.0</y>
           </position>
           <name_pos>
             <x>0.0</x>
@@ -549,13 +605,13 @@
           </name_pos>
           <shape>circle</shape>
           <size>
-            <x>46.0</x>
-            <y>46.0</y>
+            <x>51.0</x>
+            <y>51.0</y>
           </size>
           <control_points>
             <control_point>
-              <x>51.0</x>
-              <y>-20.0</y>
+              <x>52.0</x>
+              <y>-24.0</y>
             </control_point>
           </control_points>
           <angle>0.0</angle>
@@ -573,7 +629,7 @@
     <ball>
       <name>Cut_0</name>
       <endpoint1>
-        <bodyname>Axle</bodyname>
+        <bodyname>Knuckle</bodyname>
         <pointname>Point_0</pointname>
       </endpoint1>
       <endpoint2>

@@ -11,7 +11,7 @@
 %	1348 Louvain-la-Neuve 
 %	http://www.robotran.be// 
 %
-%	==> Generation Date : Wed May 18 15:16:51 2016
+%	==> Generation Date : Thu May 19 17:32:49 2016
 %
 %	==> Project name : Suspension
 %	==> using XML input file 
@@ -107,6 +107,9 @@ trq = s.trq;
   frc(1,4) = s.frc(1,4);
   frc(2,4) = s.frc(2,4);
   frc(3,4) = s.frc(3,4);
+  frc(1,5) = s.frc(1,5);
+  frc(2,5) = s.frc(2,5);
+  frc(3,5) = s.frc(3,5);
   frc(1,6) = s.frc(1,6);
   frc(2,6) = s.frc(2,6);
   frc(3,6) = s.frc(3,6);
@@ -120,6 +123,9 @@ trq = s.trq;
   trq(1,4) = s.trq(1,4);
   trq(2,4) = s.trq(2,4);
   trq(3,4) = s.trq(3,4);
+  trq(1,5) = s.trq(1,5);
+  trq(2,5) = s.trq(2,5);
+  trq(3,5) = s.trq(3,5);
   trq(1,6) = s.trq(1,6);
   trq(2,6) = s.trq(2,6);
   trq(3,6) = s.trq(3,6);
