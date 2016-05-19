@@ -14,8 +14,9 @@ UpperArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 LowerArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 Knuckle = struct('m',5,'I',zeros(3,3));
 Wheel = struct('m',5,'I',[0 0 0; 0 0.4 0; 0 0 0]);
-Data.Body = [Chassis UpperArm LowerArm Knuckle Wheel];
-Data.inBody = [0 1 2 2 4 5];
+Axle = struct('m', 0,'I',zeros(3,3));
+Data.Body = [Chassis UpperArm LowerArm Knuckle Axle Wheel];
+Data.inBody = [0 1 2 2 4 5 6];
 Data.NBody = length(Data.Body)+1;       % The +1 comes from the addition of the base
 
 
@@ -52,6 +53,7 @@ Data.dij(:,4,4) = [0; 0.25; 0];
 Data.dij(:,4,5) = [0; 0.5; 0];
 Data.dij(:,5,5) = [0; 0; 0.125];
 Data.dij(:,5,6) = [0; 0.1; 0.125];
+Data.dij(:,5,7) = [0; 0; 0];
 
 % For each body, contains all the joints that connect them to their parent, until a maximum of 6
 Data.joints = zeros(6,Data.NBody);  
@@ -59,7 +61,8 @@ Data.joints(1,2) = 1;
 Data.joints(1,3) = 2;
 Data.joints(1,4) = 3;
 Data.joints(1,5) = 4;
-Data.joints(1:2,6) = [5; 6];
+Data.joints(1,6) = 5;
+Data.joints(1,7) = 6;
 
 %% Initialization
 Data.alphac = zeros(3,Data.NBody);
@@ -162,6 +165,7 @@ for i=2:Data.NBody
         for j=1:Data.joints(joint,i)
             Data.M(Data.joints(joint,i),j) = Data.psi(:,Data.joints(joint,i))'*Data.FM(:,i,j) + Data.phi(:,Data.joints(joint,i))'*Data.LM(:,i,j);
         end
+        disp(joint)
         joint = joint + 1;
     end
 end
