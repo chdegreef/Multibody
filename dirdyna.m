@@ -4,7 +4,7 @@ global Data;
 Data.C = zeros(6,1);
 %% Initialization
 Data.alphac = zeros(3,Data.NBody);
-Data.alphac(:,1) = [0; 0; -9.81];     % Gravity in the inertial frame
+Data.alphac(:,1) = [0; 0; 9.81];     % Gravity in the inertial frame
 Data.betac = zeros(3,3,Data.NBody);
 
 Data.omega = zeros(3,Data.NBody);

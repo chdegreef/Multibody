@@ -93,3 +93,14 @@ qAnim = interp1(tOut, result.q, tAnim);
 % sauvegarde du fichier d'animation
 tqAnim=[tAnim qAnim];
 save(['qAnimSimu.anim'], 'tqAnim',  '-ASCII');
+
+%% Plots
+figure;
+subplot(2,1,1)
+plot(result.tOut,result.q(:,1));                                    % Joint motion time history : joint n° 1 motion (example)
+ylim([0.66 0.72]);
+grid on;
+subplot(2,1,2);
+plot(result.tOut,result.q(:,2)*180/pi);                                    % Joint motion time history : joint n° 1 motion (example)
+ylim([-35 -10]);
+grid on;
