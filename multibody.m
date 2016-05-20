@@ -9,7 +9,7 @@ clc;
 % 4: LowerArm
 % 5: Knuckle
 % 6: Wheel
-
+global Data;
 Chassis = struct('m',50,'I',zeros(3,3));
 UpperArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 LowerArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
@@ -30,9 +30,9 @@ Data.NBody = length(Data.Body)+1;       % The +1 comes from the addition of the 
 % 6: axle->wheel, R2
 
 % Position, Speed and Acceleration
-Data.q = [0.7 -0.2 0 0 0 0.1];
-Data.qd = zeros(1,6);
-Data.qdd = zeros(1,6);
+Data.q = [0.7 -0.2 0 0 0 0]';
+Data.qd = zeros(1,6)';
+Data.qdd = zeros(1,6)';
 
 % Characteristics of the joints
 Data.phi = [0 1 1 1 1 0;
@@ -139,3 +139,18 @@ for i=2:Data.NBody
     end
 end
 Data.M(:,:) = (Data.M(:,:) + Data.M(:,:).')/2;
+
+%% Definition qu,qv,qc
+Data.qu = [1 2 6];
+Data.qv = [3 4];
+Data.qc = [5];
+Data.nqu = length(Data.qu);
+Data.nqv = length(Data.qv);
+Data.nqc = length(Data.qc);
+
+%% Starting integration
+tInit = 0;
+tEnd = 10;
+tSpan = [tInit,tEnd];
+y0 = [Data.q(Data.qu); Data.qd(Data.qu)];
+[tOut, yOut] = ode45(@integrationODE45,tSpan,y0);
