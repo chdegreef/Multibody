@@ -1,4 +1,11 @@
 function matRot = rot(axis, theta)
+% Computes the rotation matrix for a given axis and angle
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
 
 if (axis == 1)
     matRot = [1 0 0;

@@ -1,6 +1,14 @@
 function [M,C] = dirdyna()
 global Data;
 
+% Computes M and C, used in equation of motion
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
+
 Data.C = zeros(6,1);
 %% Initialization
 Data.alphac = zeros(3,Data.NBody);

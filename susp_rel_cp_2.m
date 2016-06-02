@@ -1,6 +1,22 @@
+% This function is the one to be executed !
+% Generates the problem (body, joints, etc.)
+% Invokes ode45
+% Creates animation
+% Plots results
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
+
 close all;
 clear;
 clc;
+global Data;
+
+%% OPTIONS
+Data.computeIndependant = 0;    % Set to 1 to compute Independant acceleration
 
 %% Definition des corps
 % 1: Base
@@ -9,7 +25,6 @@ clc;
 % 4: LowerArm
 % 5: Knuckle
 % 6: Wheel
-global Data;
 Chassis = struct('m',50,'I',zeros(3,3));
 UpperArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
 LowerArm = struct('m',1,'I',[0.01 0 0; 0 0 0; 0 0 0]);
@@ -20,7 +35,7 @@ Data.Body = [Chassis UpperArm LowerArm Knuckle Axle Wheel];
 Data.inBody = [1 2 2 4 5 6];
 Data.NBody = length(Data.Body)+1;       % The +1 comes from the addition of the base
 
-%% Definition des ddl:
+%% Degree of freedom definition
 % 1: base->chassis, T3
 % 2: chassis->upperArm, R1
 % 3: chassis->LowerArm, R1
@@ -66,6 +81,8 @@ Data.nqu = length(Data.qu);
 Data.nqv = length(Data.qv);
 Data.nqc = length(Data.qc);
 
+fprintf('Starting integration \n');
+pause(1);
 %% Starting integration
 tInit = 0;
 tEnd = 10;
@@ -73,34 +90,34 @@ tSpan = [tInit,tEnd];
 y0 = [Data.q0(Data.qu); Data.qd0(Data.qu)];
 [tOut, yOut] = ode45(@integrationODE45,tSpan,y0);
 
+fprintf('Computing results \n');
+pause(1);
+
 %% Results
 Data.q = Data.q0;
 Data.qd = Data.qd0;
 result.tOut = tOut;
 for i=1:length(tOut)
-    integrationODE45(tOut(i), yOut(i,:)'); % appel en boucle de fprime pour refaire tous les calculs a chaque pas de la solution
+    integrationODE45(tOut(i), yOut(i,:)');
     result.q(i,:)  = Data.q;
     result.qd(i,:) = Data.qd;   
-    %result.F = MBS_user.F; % a condition d'avoir stocker MBS_user.F ailleurs dans le programme
 end
+
 
 %% Animation
 dtAnim = 0.001;
-% vecteur des instants auquels on calcule une image
 tAnim=[tOut(1):dtAnim:tOut(end)]';
-% reechantillonage de la solution
 qAnim = interp1(tOut, result.q, tAnim);
-% sauvegarde du fichier d'animation
 tqAnim=[tAnim qAnim];
 save(['qAnimSimu.anim'], 'tqAnim',  '-ASCII');
 
 %% Plots
 figure;
 subplot(2,1,1)
-plot(result.tOut,result.q(:,1));                                    % Joint motion time history : joint n° 1 motion (example)
+plot(result.tOut,result.q(:,1));        % Joint motion time history : joint n° 1 motion (example)
 ylim([0.66 0.72]);
 grid on;
 subplot(2,1,2);
-plot(result.tOut,result.q(:,2)*180/pi);                                    % Joint motion time history : joint n° 1 motion (example)
+plot(result.tOut,result.q(:,2)*180/pi); % Joint motion time history : joint n° 1 motion (example)
 ylim([-35 -10]);
 grid on;

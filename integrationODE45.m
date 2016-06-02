@@ -1,10 +1,19 @@
 function [yp] = integrationODE45(t, y)
+% Function used in ode45.
+% From qu, qud => qudd. qvdd aswell if Data.computeIndependant != 0;
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
 global Data
 
-% affichage du temps: a commenter pour faire tourner la simu plus vite
-disp(['t: ' num2str(t)])
+%% Display time. To comment to make it faster !
+msg = sprintf('time = %.1f \n',t);
+fprintf(msg);
 
-% recuperation des indices pour ecriture plus compacte
+%% To make it shorter
 nqu = Data.nqu; 
 ind_qu = Data.qu;  
 nqv = Data.nqv; 
@@ -13,7 +22,7 @@ nqc = Data.nqc;
 ind_qc = Data.qc;  
 ind_quc = [ind_qu, ind_qc];
 
-% Copie des variables d'etat (y) dans les variables articulaires (qu, qdu)
+%% Copy y into memory
 Data.q(ind_qu) = y(1:nqu); 
 Data.qd(ind_qu)= y(nqu+1:2*nqu); 
 Data.tsim = t;
@@ -26,8 +35,8 @@ vk = Data.q(ind_qv);
 vkplus1 = vk;
 
 err = 1e-9;         % autorised error fo NR
-n = 100;            % number of maximal iteration
-i = 0;              % number of iteration
+n = 100;            % maximal number of iteration
+i = 0;              % current number of iteration
 [qnew,qdnew,qddnew] = drivenJoints(Data);
 
 while(norm(vkplus1-vk) > err || i<1)
@@ -46,7 +55,7 @@ while(norm(vkplus1-vk) > err || i<1)
 	end
 	i = i+1;
 end
-Data.q(ind_qv) = vkplus1; %iterate value of coordinates
+Data.q(ind_qv) = vkplus1; % copy the solution in memory 
 
 [h, J] = cons_hJ(Data);
 Ju = J(:,ind_quc);
@@ -60,13 +69,13 @@ dv = Bvu*du;
 Data.qd(ind_quc) = du;
 Data.qd(ind_qv) = dv;
 
-%% Calculation of force and momentum to find d2u
+%% Dynamics to find d2u
 
-% Ici normalement: calcul des forces
 [M, C] = dirdyna();
-Q = zeros(6,1);%JointForces();
+Q = zeros(6,1); %JointForces(); but equals to 0 !
 JdQd = cons_jdqd(Data);
 
+% First coordinate partitionning
 Muu = M(ind_quc,ind_quc);
 Muv = M(ind_quc,ind_qv);
 Mvu = M(ind_qv,ind_quc);
@@ -77,12 +86,13 @@ Qu = Q(ind_quc);
 Qv = Q(ind_qv);
 bCalculs = - Jv\JdQd;
 
-Mr = (Muu + Muv*Bvu + Bvu.'*Mvu + Bvu.'*Mvv*Bvu); %coordinate partitioning matrix Mr(u)
-Fr = (Muv + Bvu.'*Mvv)*bCalculs + (Cu + Bvu.'*Cv) - (Qu + Bvu.'*Qv); % coordinate paritioning matrix Fr(du,u)
+Mr = (Muu + Muv*Bvu + Bvu.'*Mvu + Bvu.'*Mvv*Bvu);                       % coordinate partitioning matrix Mr(u)
+Fr = (Muv + Bvu.'*Mvv)*bCalculs + (Cu + Bvu.'*Cv) - (Qu + Bvu.'*Qv);    % coordinate paritioning matrix Fr(du,u)
 
 % Final form : Mr(u)*d2u + fr(du,u) = 0
 
-if nqc > 0 % Driven coordinates, second partitioning
+% Second coordinate partitioning
+if nqc > 0 % If driven coordinates
     nuc = length(ind_quc);
     
     Mr_uu = Mr(1:nqu, 1:nqu);
@@ -98,22 +108,16 @@ if nqc > 0 % Driven coordinates, second partitioning
 else % No driven coordinates
 	Data.qdd(ind_qu) = Mr\(-Fr); %value of the second derivative independant coordinates
 end
-%% Linear system to solve d2v = Bvu*d2q(qu) + b
-d2v = Bvu*Data.qdd(ind_quc) + bCalculs;
-Data.qdd(ind_qv) = d2v; %value of the second derivative dependant coordinates
 
-%                                                             %
-%                     Fin contribution                        %
-%                                                             %
-%                                                             %
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%% Linear system to find d2v = Bvu*d2q(qu) + b
+if(Data.computeIndependant ~= 0)
+    d2v = Bvu*Data.qdd(ind_quc) + bCalculs;
+    Data.qdd(ind_qv) = d2v; %value of the second derivative dependant coordinates
+end
 
 
-
-% Copie des variables articulaires dans les variables d'etat
+%% End of function :)
 yp(1:nqu,1) = Data.qd(ind_qu); 
-
 yp(nqu+1:2*nqu,1) = Data.qdd(ind_qu); 
 
 end
-%------------------------------------------------

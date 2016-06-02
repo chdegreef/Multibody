@@ -1,4 +1,11 @@
 function externalForces = extForces(Data)
+% Computes external forces: Ground and suspension
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
 %% Force between wheel and ground
 externalForces = zeros(3, Data.NBody);
 r = 0.375;

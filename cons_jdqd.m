@@ -1,4 +1,12 @@
 function jdqd = cons_jdqd(data)
+% Computs jdqd, used in coordinate partioning
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
+
 l_arm = 0.5;
 h_knuckle = 0.25;
 

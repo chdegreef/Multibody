@@ -1,6 +1,12 @@
 function [h,J] = cons_hJ(data)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Computes h and J (constraints and jacobian)
+%%%
+% Authors
+%   De Gréef Christophe,
+%   Greiner Philippe,
+%   Lefebvre Martin, 
+%   Raucq Simon
+
 l_arm = 0.5;
 h_knuckle = 0.25;
 h_arm = 0.25;
