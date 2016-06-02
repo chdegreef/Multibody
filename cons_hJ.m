@@ -3,13 +3,13 @@ function [h,J] = cons_hJ(data)
 %   Detailed explanation goes here
 l_arm = 0.5;
 h_knuckle = 0.25;
-off_arm = -0.25;
+off_arm = 0.25;
 q = data.q;
 
 %% Constraints
 h = zeros(2,1);
 h(1) = l_arm*cos(q(3)) - h_knuckle*sin(q(3)+q(4)) - l_arm*cos(q(2));
-h(2) = l_arm*sin(q(3)) + h_knuckle*cos(q(3)+q(4)) - l_arm*sin(q(2)) + off_arm;
+h(2) = l_arm*sin(q(3)) + h_knuckle*cos(q(3)+q(4)) - l_arm*sin(q(2)) - off_arm;
 
 %% Jacobian
 J = zeros(2,6);
